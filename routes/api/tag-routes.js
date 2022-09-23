@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     const data = await Tag.findAll({
       include: [{model: Product}],
     });
+    
     res.status(200).json(data);
   }
   catch (err){
@@ -25,6 +26,9 @@ router.get('/:id', async (req, res) => {
     const data = await Tag.findByPk(req.params.id, {
       include: {model: Product},
     });
+    if(!data){
+      res.status(404).json({message:"No category found with that id!"});
+    }
     res.status(200).json(data);
   }
   catch (err){
